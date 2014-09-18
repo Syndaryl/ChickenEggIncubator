@@ -15,8 +15,8 @@ public class TutFurnaceRecipes {
 
 	private static final TutFurnaceRecipes SMELTING_BASE = new TutFurnaceRecipes();
 
-	private Map smeltingList = new HashMap();
-	private Map experienceList = new HashMap();
+	private Map<ItemStack, ItemStack> smeltingList = new HashMap<ItemStack, ItemStack>();
+	private Map<ItemStack, Float> experienceList = new HashMap<ItemStack, Float>();
 
 	public static TutFurnaceRecipes smelting() {
 		return SMELTING_BASE;
@@ -41,14 +41,14 @@ public class TutFurnaceRecipes {
 	}
 
 	public ItemStack getSmeltingResult(ItemStack itemstack) {
-		Iterator iterator = this.smeltingList.entrySet().iterator();
-		Entry entry;
+		Iterator<Entry<ItemStack, ItemStack>> iterator = this.smeltingList.entrySet().iterator();
+		Entry<ItemStack, ItemStack> entry;
 
 		do {
 			if (!iterator.hasNext()) {
 				return null;
 			}
-			entry = (Entry) iterator.next();
+			entry = iterator.next();
 		} while (!canBeSmelted(itemstack, (ItemStack) entry.getKey()));
 		return (ItemStack) entry.getValue();
 	}
@@ -58,15 +58,15 @@ public class TutFurnaceRecipes {
 	}
 	
 	public float giveExperience(ItemStack itemstack){
-		Iterator iterator = this.experienceList.entrySet().iterator();
-		Entry entry;
+		Iterator<Entry<ItemStack, Float>> iterator = this.experienceList.entrySet().iterator();
+		Entry<ItemStack, Float> entry;
 		
 		do{
 			if(!iterator.hasNext()){
 				return 0.0f;
 			}
 			
-			entry = (Entry) iterator.next();
+			entry = iterator.next();
 		}
 		while(!this.canBeSmelted(itemstack, (ItemStack) entry.getKey()));
 		
